@@ -43,12 +43,12 @@ def value_iteration(env, gamma=0.9, theta=1e-4):
                 q_value = reward + gamma * V[next_s_idx]
                 q_values.append(q_value)
                 # 该状态下的所有动作概率赋 0.0
-                policy[s_idx][j] = 0.0
+                policy[s_idx, j] = 0.0
             
             # 找到最大 Q 值对应的动作索引（可能有多个）
             best_action_idx = np.argmax(q_values)
             # 设置确定性策略：最优动作概率为 1
-            policy[s_idx][best_action_idx] = 1.0
+            policy[s_idx, best_action_idx] = 1.0
             # 更新 V(s) 为最大的 Q 值
             V[s_idx] = max(q_values)
 

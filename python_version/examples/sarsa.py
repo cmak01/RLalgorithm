@@ -121,7 +121,7 @@ if __name__ == "__main__":
     env = GridWorld()    
     
     # 训练  
-    optimal_policy = sarsa(env, gamma=0.9, alpha=0.1, num_episodes=5000) # 5000次对于5x5网格通常足够了  
+    optimal_policy = sarsa(env, gamma=0.9, alpha=0.1, num_episodes=10000)  
     
     # 提取纯贪婪策略用于绘图 (Deterministic)  
     display_policy = np.zeros_like(optimal_policy)    
@@ -136,6 +136,6 @@ if __name__ == "__main__":
     env.add_policy(display_policy)    
     
     print("Close the plot window to exit.")    
-    env.render(animation_interval=0)   
+    env.render(animation_interval=2)   
     plt.ioff()    
     plt.show()  

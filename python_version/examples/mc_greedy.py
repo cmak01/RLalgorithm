@@ -88,7 +88,7 @@ def mc_greedy(env, gamma=0.9, num_episodes=100000):
         if (i_episode + 1) % 1000 == 0:  
             print(f"\rEpisode {i_episode + 1}/{num_episodes} done.", end="")  
   
-    print(f"\n训练结束，耗时: {time.time() - start_time:.2f}s")  
+    print(f"\nTime taken: {time.time() - start_time:.4f}s")  
     return policy  
   
 def run_episode_with_policy(env, policy):  
@@ -125,7 +125,7 @@ if __name__ == "__main__":
     env = GridWorld()  
   
     # 增加 episode 数量以保证覆盖率，调整 epsilon 鼓励探索  
-    optimal_policy = mc_greedy(env, gamma=0.9, num_episodes=5000)  
+    optimal_policy = mc_greedy(env, gamma=0.9, num_episodes=10000)  
   
     # 为了绘图清晰，我们将策略转化为纯贪婪策略 (Deterministic) 再传给 env 绘图  
     # 这样箭头只会指向概率最大的方向  
@@ -142,6 +142,6 @@ if __name__ == "__main__":
   
     # 保持窗口显示  
     print("Close the plot window to exit.")  
-    env.render(animation_interval=0) # interval 0 配合 plt.show 保持静止  
+    env.render(animation_interval=2) 
     plt.ioff()  
     plt.show()  

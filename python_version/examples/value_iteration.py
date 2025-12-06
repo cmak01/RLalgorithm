@@ -2,6 +2,7 @@ import sys
 sys.path.append("..")
 from src.grid_world import GridWorld
 import numpy as np
+import time
 import matplotlib.pyplot as plt
 
 def value_iteration(env, gamma=0.9, theta=1e-4):
@@ -21,6 +22,8 @@ def value_iteration(env, gamma=0.9, theta=1e-4):
 
     print("开始值迭代...")
     iteration = 0
+    start_time = time.time()
+
     while True:
         delta = 0
         # 遍历每一个状态
@@ -59,7 +62,7 @@ def value_iteration(env, gamma=0.9, theta=1e-4):
         if delta < theta:
             print(f"值迭代在第 {iteration} 轮收敛。")
             break
-
+    print(f"Time taken: {time.time() - start_time:.4f}s")
     return V, policy
 
 def run_episode_with_policy(env, policy):

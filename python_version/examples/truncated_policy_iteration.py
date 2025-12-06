@@ -2,6 +2,7 @@ import sys
 sys.path.append("..")
 from src.grid_world import GridWorld
 import numpy as np
+import time
 from matplotlib import pyplot as plt
 
 def get_state_index(x, y, env_size):
@@ -18,6 +19,7 @@ def truncated_policy_iteration(env, gamma=0.9, eval_steps=10, max_iterations=100
     V = np.zeros(env.num_states)
 
     iteration = 0
+    start_time = time.time()
     while iteration < max_iterations:
         iteration += 1
 
@@ -54,7 +56,7 @@ def truncated_policy_iteration(env, gamma=0.9, eval_steps=10, max_iterations=100
         if policy_stable:
             print(f"Converged after {iteration} iterations.") 
             break
-    
+    print(f"Time taken: {time.time() - start_time:.4f}s")
     return V, policy_matrix
 
 def run_episode_with_policy(env, policy):

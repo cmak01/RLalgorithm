@@ -38,9 +38,7 @@ def mc_greedy(env, gamma=0.9, num_episodes=100000):
         state, _ = env.reset()  
         trajectory = [] # 存储 (state_idx, action_idx, reward)  
           
-        # --- 生成一个完整的回合 (Episode Generation) ---  
-        # 如果步数太多还没到终点，强制截断以防死循环，但MC通常要求到达终点  
-        # for step in range(500):   
+        # --- 生成一个完整的回合 (Episode Generation) ---     
         while True:
             state_idx = get_state_index(state, env_size)  
               
@@ -83,14 +81,11 @@ def mc_greedy(env, gamma=0.9, num_episodes=100000):
             # --- 策略改进 (即时更新) ---  
             best_a_idx = np.argmax(Q[s_idx])  
               
-            # 更新该状态的策略概率  
-            for a in range(num_actions):  
-                if a == best_a_idx:  
-                    policy[s_idx, a] = 1 - current_epsilon + (current_epsilon / num_actions)  
-                else:  
-                    policy[s_idx, a] = current_epsilon / num_actions  
+            # 更新该状态的策略概率
+            policy[s_idx] = current_epsilon / num_actions
+            policy[s_idx, best_a_idx] += (1 - current_epsilon)  
   
-        if (i_episode + 1) % 100 == 0:  
+        if (i_episode + 1) % 1000 == 0:  
             print(f"\rEpisode {i_episode + 1}/{num_episodes} done.", end="")  
   
     print(f"\n训练结束，耗时: {time.time() - start_time:.2f}s")  
@@ -130,7 +125,7 @@ if __name__ == "__main__":
     env = GridWorld()  
   
     # 增加 episode 数量以保证覆盖率，调整 epsilon 鼓励探索  
-    optimal_policy = mc_greedy(env, gamma=0.9, num_episodes=100000)  
+    optimal_policy = mc_greedy(env, gamma=0.9, num_episodes=5000)  
   
     # 为了绘图清晰，我们将策略转化为纯贪婪策略 (Deterministic) 再传给 env 绘图  
     # 这样箭头只会指向概率最大的方向  

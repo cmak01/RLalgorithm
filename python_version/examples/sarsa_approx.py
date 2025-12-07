@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     agent = LinearSarsaAgent(env, alpha=0.05, gamma=0.9, epsilon=0.1)
 
-    num_episodes = 30000
+    num_episodes = 2000
 
     print(f"Start Training Sarsa with Function Approximation for {num_episodes} episodes...")
 
@@ -150,7 +150,8 @@ if __name__ == "__main__":
 
             total_reward += reward
 
-        if episode > 0 and episode % 1000 == 0:
+        if episode > 0 and episode % 100 == 0:
+            agent.epsilon = max(0.01, agent.epsilon * 0.95)
             print(f"Episode {episode}, Reward: {total_reward:.2f}, Epsilon: {agent.epsilon:.3f}")
 
     print("Training finished.")

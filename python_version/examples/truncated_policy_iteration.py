@@ -24,7 +24,7 @@ def truncated_policy_iteration(env, gamma=0.9, eval_steps=10, max_iterations=100
         iteration += 1
 
         for _ in range(eval_steps):
-            new_V = np.copy(V)
+            # new_V = np.copy(V)
             for s_idx in range(env.num_states):
                 v_s = 0.0
                 state = get_state_coord(s_idx, env.env_size)
@@ -33,8 +33,9 @@ def truncated_policy_iteration(env, gamma=0.9, eval_steps=10, max_iterations=100
                     if prob_a > 0.0:
                         next_state, reward = env._get_next_state_and_reward(state, action)
                         v_s += prob_a * (reward + gamma * V[get_state_index(next_state[0], next_state[1], env.env_size)])
-                new_V[s_idx] = v_s
-            V = new_V
+                # new_V[s_idx] = v_s
+                V[s_idx] = v_s
+            # V = new_V
 
         policy_stable = True
         for s_idx in range(env.num_states):

@@ -19,9 +19,10 @@ def mc_greedy(env, gamma=0.9, num_episodes=100000):
     num_actions = len(env.action_space)
     epsilon_start = 1.0  
     epsilon_end = 0.01
-    decay_episodes = int(num_episodes * 0.3)
+    decay_episodes = int(num_episodes * 0.4)
     # 计算每一步减少多少  
-    epsilon_decay_step = (epsilon_start - epsilon_end) / decay_episodes  
+    epsilon_decay_step = (epsilon_start - epsilon_end) / decay_episodes
+    num_episodes_front = int(num_episodes * 0.2)  
   
     # 2. 初始化 Q 表, 计数表 N, 和策略  
     Q = np.zeros((num_states, num_actions))  
@@ -58,9 +59,11 @@ def mc_greedy(env, gamma=0.9, num_episodes=100000):
         # --- 策略评估与改进 (Policy Evaluation & Improvement) ---  
         G = 0
         visited_pairs = set()
-        # === 线性衰减计算 ===  
-        if i_episode < decay_episodes:  
-            current_epsilon = epsilon_start - i_episode * epsilon_decay_step  
+        # === 线性衰减计算 ===
+        if i_episode < num_episodes_front:
+            current_epsilon = epsilon_start      
+        elif i_episode < num_episodes_front + decay_episodes:  
+            current_epsilon = epsilon_start - (i_episode - num_episodes_front) * epsilon_decay_step  
         else:  
             current_epsilon = epsilon_end
         # 逆序回溯计算  
@@ -125,7 +128,7 @@ if __name__ == "__main__":
     env = GridWorld()  
   
     # 增加 episode 数量以保证覆盖率，调整 epsilon 鼓励探索  
-    optimal_policy = mc_greedy(env, gamma=0.9, num_episodes=10000)  
+    optimal_policy = mc_greedy(env, gamma=0.9, num_episodes=30000)  
   
     # 为了绘图清晰，我们将策略转化为纯贪婪策略 (Deterministic) 再传给 env 绘图  
     # 这样箭头只会指向概率最大的方向  

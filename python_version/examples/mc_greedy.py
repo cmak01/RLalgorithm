@@ -18,7 +18,7 @@ def mc_greedy(env, gamma=0.9, num_episodes=100000):
     num_states = env.num_states  
     num_actions = len(env.action_space)
     epsilon_start = 1.0  
-    epsilon_end = 0.01
+    epsilon_end = 0.001
     decay_episodes = int(num_episodes * 0.4)
     # 计算每一步减少多少  
     epsilon_decay_step = (epsilon_start - epsilon_end) / decay_episodes

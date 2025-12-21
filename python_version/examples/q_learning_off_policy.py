@@ -115,7 +115,7 @@ if __name__ == "__main__":
     
     # 使用较少的回合数即可，因为加入了 epsilon-greedy 策略效率更高  
     # epsilon=0.1 表示 10% 概率随机探索，90% 概率利用 
-    optimal_policy = q_learning_off_policy(env, gamma=0.9, alpha=0.1, epsilon=0.1, num_episodes=30000)
+    optimal_policy = q_learning_off_policy(env, gamma=0.9, alpha=0.1, epsilon=0.1, num_episodes=50000)
 
     # 让智能体按照算出来的策略走一遍
     run_episode_with_policy(env, optimal_policy)

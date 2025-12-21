@@ -124,9 +124,9 @@ def run_episode_with_policy(env, policy):
 if __name__ == "__main__":
     env = GridWorld()
 
-    agent = LinearSarsaAgent(env, alpha=0.05, gamma=0.9, epsilon=0.1)
+    agent = LinearSarsaAgent(env, alpha=0.01, gamma=0.9, epsilon=0.1)
 
-    num_episodes = 2000
+    num_episodes = 5000
 
     print(f"Start Training Sarsa with Function Approximation for {num_episodes} episodes...")
 

@@ -81,8 +81,8 @@ class GridWorld():
             x, y = self.target_state
             reward = self.reward_target
         elif new_state in self.forbidden_states:  # stay
-            x, y = state # 禁区不可进
-            #x, y = new_state # 禁区可进
+            #x, y = state # 禁区不可进
+            x, y = new_state # 禁区可进
             reward = self.reward_forbidden        
         else:
             x, y = new_state
